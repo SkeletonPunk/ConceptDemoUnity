@@ -1,0 +1,19 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\utility\DemoGunSwitch.cs">
+    <Files>
+      <File FileName="Assets\scripts\utility\effects\ColorParent.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\player\Player.cs" Line="92" Column="61" />
+      <File FileName="Assets\scripts\utility\DemoGunSwitch.cs" Line="20" Column="89" />
+      <File FileName="Assets\scripts\guns\GunController.cs" Line="18" Column="26" />
+      <File FileName="Assets\scripts\guns\Gun.cs" Line="53" Column="99" />
+      <File FileName="Assets\scripts\projectiles\Projectile.cs" Line="67" Column="114" />
+      <File FileName="Assets\scripts\entities\LivingEntity.cs" Line="31" Column="24" />
+      <File FileName="Assets\scripts\utility\interfaces\IDamagable.cs" Line="10" Column="15" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
