@@ -6,3 +6,4 @@ Builds
 obj
 Library
 *.vs
+*.userperfs
