@@ -55,6 +55,7 @@ public class Player : LivingEntity {
 		AdjustPlayerRotation();
 
 		//Weapon Input
+		if(Input.GetMouseButtonDown(0)) gunController.OnTriggerPress();
 		if(Input.GetMouseButton(0)) gunController.OnTriggerHold();
 		if(Input.GetMouseButtonUp(0)) gunController.OnTriggerRelease();
 		SwitchColor(Input.GetAxisRaw("Mouse ScrollWheel"));

@@ -22,6 +22,10 @@ public class GunController : MonoBehaviour, IColorable {
 		currentGun.SetColor(color);
 	}
 
+	public void OnTriggerPress() {
+		if (currentGun) currentGun.OnTriggerPress();
+	}
+
 	public void OnTriggerHold() {
 		if (currentGun) currentGun.OnTriggerHold();
 	}

@@ -6,25 +6,30 @@ public class Gun : MonoBehaviour, IColorChildren {
 	public string gunName;
 	public float damagePercentDefault;
 	public float damagePercentMatch;
+
 	public enum CountMode{Finite, Infinite}
 	public CountMode fireMode = CountMode.Finite;
 	public CountMode ammoMode = CountMode.Infinite;
-	Manager.COLORS color;
 
 	public Transform[] muzzles;
 	public Projectile bullet;
+
 	public int shotCount = 1;
 	public int ammoCount = 10;
 	public float fireCooldown = 0.3F;
+	public float clickCooldown = 0.1F;
 	public float bulletVelocity = 35F;
 	public float bulletLifetime = 1F;
+
+	float nextShotTime;
+	bool canClick = true;
+	bool isHolding = false;
+	Manager.COLORS color;
 	int shotsFired = 0;
 	int ammoUsed = 0;
 
-	float nextShotTime;
-	bool activated;
-
 	List<IColorable> children = new List<IColorable>();
+	IEnumerator currentSet;
 
 	public virtual void Init() {
 		for (int i = 0; i < transform.childCount; i++) {
@@ -37,22 +42,40 @@ public class Gun : MonoBehaviour, IColorChildren {
 	}
 
 	public virtual void Shoot() {
-		if (Time.time >= nextShotTime) {
-			if (fireMode == CountMode.Finite) {
-				if (shotsFired >= shotCount) return;
-				shotsFired++;
-			}
-			if (ammoMode == CountMode.Finite) {
-				if (ammoUsed >= ammoCount) return;
-				ammoUsed++;
-			}
+		foreach (Transform muzzle in muzzles) {
+			Projectile newBullet = Instantiate<Projectile>(bullet, muzzle.position, muzzle.rotation);
+			newBullet.Init(bulletVelocity, bulletLifetime, color, damagePercentDefault, damagePercentMatch);
+		}
+		shotsFired++;
+		ammoUsed++;
+	}
 
-			nextShotTime = Time.time + fireCooldown;
-			foreach (Transform muzzle in muzzles) {
-				Projectile newBullet = Instantiate<Projectile>(bullet, muzzle.position, muzzle.rotation);
-				newBullet.Init(bulletVelocity, bulletLifetime, color, damagePercentDefault, damagePercentMatch);
+	protected virtual bool GunHasAmmo() {
+		if (ammoMode == CountMode.Finite && ammoUsed < ammoCount) return true;
+		if (ammoMode == CountMode.Infinite) return true;
+		return false;
+	}
+
+	protected virtual bool CanShoot() {
+		if (fireMode == CountMode.Finite && shotsFired < shotCount) return true;
+		if (fireMode == CountMode.Infinite && isHolding) return true;
+		return false;
+	}
+
+	public virtual IEnumerator ShootSet() {
+		bool canContinue = true;
+		while (canContinue) {
+			Shoot();
+			if (GunHasAmmo() && CanShoot())
+				yield return new WaitForSeconds (fireCooldown);
+			else {
+				if (fireMode == CountMode.Finite) shotsFired = 0;
+				Invoke("EnableClick", clickCooldown);
+				canContinue = false;
+				yield return null;
 			}
 		}
+		Debug.Log ("WOW");
 	}
 
 	public virtual void SetColor(Manager.COLORS newColor) {
@@ -70,15 +93,25 @@ public class Gun : MonoBehaviour, IColorChildren {
 		}
 	}
 
-	public virtual void OnTriggerHold() {
-		Shoot();
+	public virtual void OnTriggerPress() {
+		if (canClick) {
+			canClick = false;
+			isHolding = true;
+			StartCoroutine("ShootSet");
+		}
 	}
 
+	public virtual void OnTriggerHold() {}
+
 	public virtual void OnTriggerRelease() {
-		if (fireMode == CountMode.Finite) shotsFired = 0;
+		isHolding = false;
 	}
 
 	public virtual void OnReload() {
 		if (ammoMode == CountMode.Finite) ammoUsed = 0;
+	}
+
+	void EnableClick() {
+		canClick = true;
 	}
 }
