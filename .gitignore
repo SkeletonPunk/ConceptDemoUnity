@@ -6,4 +6,5 @@ Builds
 obj
 Library
 *.vs
-*.userperfs
+*.userprefs
+Temp
