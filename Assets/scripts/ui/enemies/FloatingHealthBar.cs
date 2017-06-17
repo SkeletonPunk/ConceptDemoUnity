@@ -6,7 +6,7 @@ public class FloatingHealthBar : MonoBehaviour {
 	public LivingEntity entity;
 	public Transform HealthBarInner;
 
-	void Update () {
+	void LateUpdate () {
 		HealthBarInner.localScale = new Vector3(
 			(float)entity.currentHealth / (float)entity.defaultHealth,
 			HealthBarInner.localScale.y,

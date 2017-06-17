@@ -21,6 +21,8 @@ public class Gun : MonoBehaviour, IColorChildren {
 	public float bulletVelocity = 35F;
 	public float bulletLifetime = 1F;
 
+	public System.Action gunFinished;
+
 	float nextShotTime;
 	bool canClick = true;
 	bool isHolding = false;
@@ -75,7 +77,8 @@ public class Gun : MonoBehaviour, IColorChildren {
 				yield return null;
 			}
 		}
-		Debug.Log ("WOW");
+
+		if (ammoMode == CountMode.Finite && ammoUsed >= ammoCount && gunFinished != null) gunFinished();
 	}
 
 	public virtual void SetColor(Manager.COLORS newColor) {
@@ -105,10 +108,6 @@ public class Gun : MonoBehaviour, IColorChildren {
 
 	public virtual void OnTriggerRelease() {
 		isHolding = false;
-	}
-
-	public virtual void OnReload() {
-		if (ammoMode == CountMode.Finite) ammoUsed = 0;
 	}
 
 	void EnableClick() {

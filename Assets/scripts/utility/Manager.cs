@@ -10,6 +10,7 @@ public class Manager : MonoBehaviour {
 	[SerializeField]
 	Color ColorC;
 
+	public static uint score;
 	public enum COLORS {COLORA, COLORB, COLORC}
 	public static System.Action OnColorUpdate;
 

@@ -12,11 +12,11 @@ public class Projectile : MonoBehaviour, IColorChildren {
 	[HideInInspector]
 	public float damagePercentMatch;
 
-	Manager.COLORS color = Manager.COLORS.COLORA;
-	List<IColorable> children = new List<IColorable>();
+	protected Manager.COLORS color = Manager.COLORS.COLORA;
+	protected List<IColorable> children = new List<IColorable>();
 
-	bool justSpawned;
-	float moveDistance;
+	protected bool justSpawned;
+	protected float moveDistance;
 
 	public virtual void Init(float newSpeed, float lifetime, Manager.COLORS newColor, float dPD, float dPM) {
 		Destroy(gameObject, lifetime);

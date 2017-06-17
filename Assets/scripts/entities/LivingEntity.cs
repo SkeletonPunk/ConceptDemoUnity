@@ -66,7 +66,11 @@ public class LivingEntity : MonoBehaviour, IDamagable, IColorable {
 
 	protected virtual void Die() {
 		isDead = true;
-		if (OnDeath != null) OnDeath();
+		DeathEvent();
 		GameObject.Destroy (gameObject, deathDelay);
+	}
+
+	protected void DeathEvent(){
+		if (OnDeath != null) OnDeath();
 	}
 }

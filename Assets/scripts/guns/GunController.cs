@@ -20,6 +20,7 @@ public class GunController : MonoBehaviour, IColorable {
 		currentGun.Init();
 		currentGun.transform.parent = weaponHold;
 		currentGun.SetColor(color);
+		currentGun.gunFinished += EquipDefault;
 	}
 
 	public void OnTriggerPress() {
@@ -41,5 +42,9 @@ public class GunController : MonoBehaviour, IColorable {
 
 	public Manager.COLORS GetColor() {
 		return color;
+	}
+
+	void EquipDefault() {
+		EquipGun(startingGun);
 	}
 }
