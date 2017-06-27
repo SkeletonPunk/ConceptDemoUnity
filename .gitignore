@@ -1,7 +1,6 @@
 *.sln
 *.csproj
 *.zip
-*.meta
 Builds
 obj
 Library
